@@ -1,34 +1,53 @@
-export const cart = [
-  {
-    productId: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
-    quantity: 2,
-  },
-  {
-    productId: "15b6fc6f-327a-4ec4-896f-486349e85a3d",
-    quantity: 1,
-  },
-];
-export function addToCart(productId) {
-  let matchingItem;
+// ✅ Load cart from localStorage (if exists), or use empty array
+export let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-  cart.forEach((item) => {
-    if (item.productId === productId) {
-      matchingItem = item;
-    }
-  });
+// ✅ Save cart to localStorage
+function saveCart() {
+  localStorage.setItem("cart", JSON.stringify(cart));
+}
+
+// ✅ Add item to cart with quantity and default delivery option
+export function addToCart(productId, quantity = 1) {
+  let matchingItem = cart.find((item) => item.productId === productId);
 
   if (matchingItem) {
-    matchingItem.quantity++;
+    matchingItem.quantity += quantity;
   } else {
     cart.push({
-      productId: productId,
-      quantity: 1,
+      productId,
+      quantity,
+      deliveryOptionId: 1, // default to 7-day delivery (free)
     });
   }
 
-  let cartQuantity = 0;
-  cart.forEach((item) => {
-    cartQuantity += item.quantity;
-  });
-  document.querySelector(".js-cart-quantity").innerHTML = cartQuantity;
+  saveCart();
+}
+
+// ✅ Remove an item from cart
+export function removeFromCart(productId) {
+  const index = cart.findIndex((item) => item.productId === productId);
+  if (index !== -1) {
+    cart.splice(index, 1);
+    saveCart();
+  }
+}
+
+// ✅ Update delivery option for a product in cart
+export function updateDeliveryOption(productId, newOptionId) {
+  const matchingItem = cart.find((item) => item.productId === productId);
+  if (matchingItem) {
+    matchingItem.deliveryOptionId = parseInt(newOptionId);
+    saveCart();
+  }
+}
+
+// ✅ Get total quantity (useful for header badge updates)
+export function getCartQuantity() {
+  return cart.reduce((sum, item) => sum + item.quantity, 0);
+}
+
+// ✅ Auto update cart quantity in header on load
+const cartQuantityElement = document.querySelector(".js-cart-quantity");
+if (cartQuantityElement) {
+  cartQuantityElement.innerText = getCartQuantity();
 }

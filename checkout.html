@@ -1,14 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
+    <meta charset="UTF-8" />
     <title>Checkout</title>
-
-    <!-- This code is needed for responsive design to work.
-      (Responsive design = make the website look good on
-      smaller screen sizes like a phone or a tablet). -->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <!-- Load a font called Roboto from Google Fonts. -->
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -16,11 +13,12 @@
       rel="stylesheet"
     />
 
-    <!-- Here are the CSS files for this page. -->
+    <!-- CSS Files -->
     <link rel="stylesheet" href="styles/shared/general.css" />
     <link rel="stylesheet" href="styles/pages/checkout/checkout-header.css" />
     <link rel="stylesheet" href="styles/pages/checkout/checkout.css" />
   </head>
+
   <body>
     <div class="checkout-header">
       <div class="header-content">
@@ -35,8 +33,11 @@
         </div>
 
         <div class="checkout-header-middle-section">
-          Checkout (<a class="return-to-home-link" href="amazon.html">3 items</a
-          >)
+          Checkout (
+          <a class="return-to-home-link" href="amazon.html">
+            <span class="js-items-count">0</span> items
+          </a>
+          )
         </div>
 
         <div class="checkout-header-right-section">
@@ -48,6 +49,8 @@
     <div class="main">
       <div class="page-title">Review your order</div>
 
+      <div class="js-cart-summary-container"></div>
+
       <div class="checkout-grid">
         <div class="order-summary js-order-summary"></div>
 
@@ -55,28 +58,28 @@
           <div class="payment-summary-title">Order Summary</div>
 
           <div class="payment-summary-row">
-            <div>Items (3):</div>
-            <div class="payment-summary-money">$42.75</div>
+            <div>Items (<span class="js-items-count">0</span>):</div>
+            <div class="payment-summary-money js-items-total">$0.00</div>
           </div>
 
           <div class="payment-summary-row">
             <div>Shipping &amp; handling:</div>
-            <div class="payment-summary-money">$4.99</div>
+            <div class="payment-summary-money js-shipping">$0.00</div>
           </div>
 
           <div class="payment-summary-row subtotal-row">
             <div>Total before tax:</div>
-            <div class="payment-summary-money">$47.74</div>
+            <div class="payment-summary-money js-before-tax">$0.00</div>
           </div>
 
           <div class="payment-summary-row">
             <div>Estimated tax (10%):</div>
-            <div class="payment-summary-money">$4.77</div>
+            <div class="payment-summary-money js-tax">$0.00</div>
           </div>
 
           <div class="payment-summary-row total-row">
             <div>Order total:</div>
-            <div class="payment-summary-money">$52.51</div>
+            <div class="payment-summary-money js-total">$0.00</div>
           </div>
 
           <button class="place-order-button button-primary">
@@ -86,6 +89,7 @@
       </div>
     </div>
 
+    <!-- ✅ Load JS from separate file (do NOT paste raw JS here!) -->
     <script type="module" src="scripts/checkout.js"></script>
   </body>
 </html>
