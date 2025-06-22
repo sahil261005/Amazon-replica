@@ -1,5 +1,6 @@
 import { cart } from "../data/cart.js";
 import { products } from "../data/products.js";
+import "../data/backend-practice.js";
 
 // Helper to store cart in localStorage
 function saveCart() {
