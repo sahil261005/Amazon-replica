@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Amazon Login</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="styles/shared/general.css" />
+    <style>
+      body {
+        background-color: #f3f3f3;
+        margin: 0;
+        padding: 0;
+      }
+
+      .login-container {
+        max-width: 400px;
+        margin: 30px auto;
+        padding: 30px 40px;
+        background-color: white;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .amazon-logo {
+        display: block;
+        width: 120px;
+        margin: 0 auto 30px;
+      }
+
+      .login-title {
+        font-size: 28px;
+        font-weight: 400;
+        margin-bottom: 25px;
+        text-align: center;
+      }
+
+      .login-form {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .form-group label {
+        font-weight: 700;
+        font-size: 14px;
+        color: #111;
+      }
+
+      .form-group input {
+        padding: 12px;
+        border: 1px solid #a6a6a6;
+        border-radius: 4px;
+        font-size: 15px;
+        transition: border-color 0.2s;
+      }
+
+      .form-group input:focus {
+        border-color: #e77600;
+        box-shadow: 0 0 3px 2px rgba(228, 121, 17, 0.5);
+        outline: none;
+      }
+
+      .login-button {
+        background: linear-gradient(to bottom, #f7dfa5, #f0c14b);
+        border: 1px solid #a88734;
+        border-radius: 4px;
+        padding: 12px;
+        cursor: pointer;
+        font-size: 15px;
+        font-weight: 500;
+        margin-top: 10px;
+        transition: all 0.2s;
+      }
+
+      .login-button:hover {
+        background: linear-gradient(to bottom, #f5d78e, #eeb933);
+      }
+
+      .error-message {
+        color: #c40000;
+        font-size: 13px;
+        display: none;
+        background-color: #fff;
+        padding: 8px 12px;
+        border-radius: 4px;
+        border: 1px solid #c40000;
+      }
+
+      .divider {
+        text-align: center;
+        position: relative;
+        margin: 20px 0;
+      }
+
+      .divider::before,
+      .divider::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        width: 45%;
+        height: 1px;
+        background-color: #e7e7e7;
+      }
+
+      .divider::before {
+        left: 0;
+      }
+
+      .divider::after {
+        right: 0;
+      }
+
+      .new-to-amazon {
+        text-align: center;
+        color: #767676;
+        font-size: 13px;
+        margin-bottom: 15px;
+      }
+
+      .create-account-button {
+        width: 100%;
+        padding: 12px;
+        font-size: 14px;
+        background: linear-gradient(to bottom, #f7f8fa, #e7e9ec);
+        border: 1px solid #adb1b8;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-top: 10px;
+      }
+
+      .create-account-button:hover {
+        background: linear-gradient(to bottom, #e7e9ec, #dcdfe3);
+      }
+
+      /* New styles for the funny image overlay */
+      .funny-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 0, 0, 0.1);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+      }
+
+      .funny-image-container {
+        background: white;
+        padding: 40px 60px;
+        border-radius: 20px;
+        text-align: center;
+        animation: shake 0.5s ease-in-out;
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+      }
+
+      .funny-image-container h2 {
+        color: #ff4444;
+        font-size: 42px;
+        margin: 0 0 30px 0;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .funny-image-container img {
+        width: 150px;
+        height: 150px;
+        animation: bounce 0.5s ease-in-out;
+      }
+
+      @keyframes bounce {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-20px);
+        }
+      }
+
+      @keyframes shake {
+        0%,
+        100% {
+          transform: translateX(0);
+        }
+        25% {
+          transform: translateX(-10px) rotate(-2deg);
+        }
+        75% {
+          transform: translateX(10px) rotate(2deg);
+        }
+      }
+
+      @media (max-width: 480px) {
+        .login-container {
+          margin: 0;
+          max-width: none;
+          border: none;
+          border-radius: 0;
+          padding: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="login-container">
+      <img class="amazon-logo" src="images/amazon-logo.png" alt="Amazon Logo" />
+      <h1 class="login-title">Sign In</h1>
+      <form class="login-form js-login-form">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" required autocomplete="email" />
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" required />
+        </div>
+        <div class="error-message js-error-message">
+          Invalid email or password. Please try again.
+        </div>
+        <button type="submit" class="login-button">Sign In</button>
+      </form>
+
+      <div class="divider"></div>
+
+      <div class="new-to-amazon">New to Amazon?</div>
+      <button class="create-account-button">Create your Amazon account</button>
+    </div>
+
+    <!-- Add the funny image overlay div -->
+    <div class="funny-overlay js-funny-overlay">
+      <div class="funny-image-container">
+        <h2>HAHA... NOPE!</h2>
+        <img
+          src="images/icons/emoji/laughing-with-tears-and-pointing-emoticon.webp"
+          alt="Laughing Emoji"
+        />
+      </div>
+    </div>
+
+    <!-- Add the audio element -->
+    <audio id="denied-sound" preload="auto">
+      <source src="sounds/error.mp3" type="audio/mpeg" />
+      <source src="sounds/error.wav" type="audio/wav" />
+    </audio>
+
+    <script>
+      // Synthesized laughing sound effect
+      function playLaughSound() {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContext) return;
+        const ctx = new AudioContext();
+
+        // Create oscillator for the "ha" sound
+        function createHaSound(startTime, pitch) {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+
+          osc.type = "triangle";
+          osc.frequency.value = pitch;
+
+          // Create laugh envelope
+          gain.gain.setValueAtTime(0, startTime);
+          gain.gain.linearRampToValueAtTime(0.3, startTime + 0.05);
+          gain.gain.linearRampToValueAtTime(0, startTime + 0.2);
+
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+
+          osc.start(startTime);
+          osc.stop(startTime + 0.2);
+        }
+
+        // Create a sequence of "ha" sounds
+        createHaSound(0, 440); // First "ha"
+        createHaSound(0.2, 460); // Second "ha"
+        createHaSound(0.4, 480); // Third "ha"
+
+        // Clean up
+        setTimeout(() => ctx.close(), 1000);
+      }
+
+      document
+        .querySelector(".js-login-form")
+        .addEventListener("submit", (event) => {
+          event.preventDefault();
+
+          const email = document.querySelector("#email").value;
+          const password = document.querySelector("#password").value;
+          const errorMessage = document.querySelector(".js-error-message");
+          const funnyOverlay = document.querySelector(".js-funny-overlay");
+
+          if (email === "sahilninja3@gmail.com" && password === "123456789") {
+            sessionStorage.setItem("isLoggedIn", "true");
+            window.location.href = "amazon.html";
+          } else {
+            // Show the funny image overlay and play laugh sound
+            funnyOverlay.style.display = "flex";
+            playLaughSound();
+
+            // Hide the overlay after 1 second
+            setTimeout(() => {
+              funnyOverlay.style.display = "none";
+              errorMessage.style.display = "block";
+            }, 1000);
+          }
+        });
+
+      // Optional: Hide error message when user starts typing again
+      document.querySelectorAll("input").forEach((input) => {
+        input.addEventListener("input", () => {
+          document.querySelector(".js-error-message").style.display = "none";
+        });
+      });
+    </script>
+  </body>
+</html>

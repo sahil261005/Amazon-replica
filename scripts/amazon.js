@@ -1,3 +1,8 @@
+// Check if user is logged in
+if (!sessionStorage.getItem('isLoggedIn')) {
+  window.location.href = 'login.html';
+}
+
 import { cart, addToCart } from "../data/cart.js";
 import { products } from "../data/products.js";
 
